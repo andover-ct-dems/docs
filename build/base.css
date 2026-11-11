@@ -1,0 +1,210 @@
+/* Structural styles, theme-independent. Colours, fonts and sizes come from
+ * build/theme.css (custom properties), which is loaded BEFORE this file; no
+ * colour literal belongs here.
+ *
+ * Trimmed from andoverct.info's _build/base.css to what these pages use. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Banner + breadcrumbs ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner .crumbs a {
+    color: var(--crumb-link);
+    text-decoration: none;
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current { color: var(--crumb-current); }
+
+/* ---- Layout ---- */
+.container {
+    width: 100%;
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px var(--card-shadow);
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 0 0 12px 0;
+}
+
+/* ---- Headings + text ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 32px 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    scroll-margin-top: 16px;
+}
+p { margin: 0 0 14px 0; }
+strong { font-weight: 700; color: var(--ink); }
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Link cards ---- */
+.link-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 0 0 14px 0;
+    scroll-margin-top: 16px;
+}
+.link-card:target {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+.link-card-title {
+    font-family: var(--font-sans);
+    font-size: 12pt;
+    font-weight: 700;
+    margin: 0;
+}
+.link-card-title .ext-mark {
+    margin-left: 0.35em;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+.link-card-desc {
+    margin: 6px 0 0 0;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+}
+.link-card-meta {
+    font-family: var(--font-sans);
+    margin: 8px 0 0 0;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+.link-group-desc {
+    color: var(--ink-mute);
+    margin: 0 0 14px 0;
+}
+.links-count {
+    font-family: var(--font-sans);
+    margin-top: 28px;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+
+/* ---- Footer bar ----
+   Full-width, carrying the banner's background with its rule mirrored onto the
+   top edge, so every page is bookended by the same chrome. */
+.site-footer {
+    background: var(--banner-bg);
+    border-top: var(--banner-border, none);
+    color: var(--banner-ink);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.55;
+}
+.site-footer-inner {
+    max-width: 512px;
+    margin: 0 auto;
+    padding: 1.15rem 20px;
+    text-align: center;
+}
+.site-footer strong { color: var(--crumb-current); font-weight: 600; }
+.site-footer .site-footer-inner a {
+    color: var(--crumb-link);
+    border-bottom: 1px solid transparent;
+}
+.site-footer .site-footer-inner a:hover {
+    color: var(--crumb-link-hover);
+    border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, so it sits at the viewport bottom on a short page and simply
+   follows the content on a long one. Screen only. */
+@media screen {
+    body {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+    }
+    .site-footer { margin-top: auto; }
+}
+
+@media print {
+    .site-footer {
+        background: none;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-mute);
+    }
+    .site-footer strong { color: var(--ink-soft); }
+    .site-footer .site-footer-inner a { color: inherit; }
+}

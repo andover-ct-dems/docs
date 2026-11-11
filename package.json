@@ -1,0 +1,16 @@
+{
+  "name": "docs.andoverctdems.com",
+  "private": true,
+  "type": "module",
+  "description": "Static documents and link registry for the Andover Democratic Town Committee, built to GitHub Pages.",
+  "scripts": {
+    "build": "node build/build.mjs",
+    "serve": "node build/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "dependencies": {
+    "js-yaml": "^5.2.1"
+  }
+}
