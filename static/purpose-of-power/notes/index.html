@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Notes on “The Purpose of the Power”">
+<meta property="og:description" content="References and further reading for “The Purpose of the Power”: the source behind each factual claim in the essay and resolution, with caveats.">
+<meta property="og:url" content="https://docs.andoverctdems.com/purpose-of-power/notes/">
+<link rel="canonical" href="https://docs.andoverctdems.com/purpose-of-power/notes/">
+<title>Notes on “The Purpose of the Power” — Andover Democrats</title>
+<style>
+:root {
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --rule:           #e3e8ef;
+  --accent:         #e8a800;
+  --accent-2:       #0f2a4a;
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;
+  --crumb-link:       #e8a800;
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff;
+  --link:           #245c95;
+  --link-hover:     #1c4e80;
+  --link-underline: #cfe0f2;
+  --card-shadow:    rgba(0, 0, 0, 0.04);
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+  --font-ui:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --base-size:  11pt;
+  --measure:    860px;
+  --gutter:     30px;
+  --title-size: 28pt;
+  --h2-size:    18pt;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner .crumbs a {
+    color: var(--crumb-link);
+    text-decoration: none;
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current { color: var(--crumb-current); }
+.container {
+    width: 100%;
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px var(--card-shadow);
+}
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 0 0 12px 0;
+}
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 32px 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    scroll-margin-top: 16px;
+}
+p { margin: 0 0 14px 0; }
+strong { font-weight: 700; color: var(--ink); }
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+.link-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 0 0 14px 0;
+    scroll-margin-top: 16px;
+}
+.link-card:target {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+.link-card-title {
+    font-family: var(--font-sans);
+    font-size: 12pt;
+    font-weight: 700;
+    margin: 0;
+}
+.link-card-desc {
+    margin: 6px 0 0 0;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+}
+.link-card-meta {
+    font-family: var(--font-sans);
+    margin: 8px 0 0 0;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+.site-footer {
+    background: var(--banner-bg);
+    border-top: var(--banner-border, none);
+    color: var(--banner-ink);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.55;
+}
+.site-footer-inner {
+    max-width: 512px;
+    margin: 0 auto;
+    padding: 1.15rem 20px;
+    text-align: center;
+}
+.site-footer strong { color: var(--crumb-current); font-weight: 600; }
+.site-footer .site-footer-inner a {
+    color: var(--crumb-link);
+    border-bottom: 1px solid transparent;
+}
+.site-footer .site-footer-inner a:hover {
+    color: var(--crumb-link-hover);
+    border-bottom-color: currentColor;
+}
+@media screen {
+    body {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+    }
+    .site-footer { margin-top: auto; }
+}
+@media print {
+    .site-footer {
+        background: none;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-mute);
+    }
+    .site-footer strong { color: var(--ink-soft); }
+    .site-footer .site-footer-inner a { color: inherit; }
+}
+
+/* ---- additions for the purpose-of-power pages ---- */
+h3 {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    font-weight: 700;
+    margin: 26px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    scroll-margin-top: 16px;
+}
+.doc-deck {
+    font-style: italic;
+    color: var(--ink-mute);
+    margin: 0 0 10px 0;
+}
+.doc-meta {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 14px 0;
+}
+.doc-meta .sep, .link-card-meta .sep { margin: 0 0.5em; opacity: 0.6; }
+.prose { max-width: 42em; }
+.prose p { margin: 0 0 16px 0; }
+.prose ul { margin: 0 0 14px 0; padding-left: 1.3em; }
+.prose li { margin: 0 0 9px 0; }
+.doc-nav {
+    font-family: var(--font-sans);
+    font-size: 10pt;
+    margin: 36px 0 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-mute);
+}
+.doc-nav .sep { margin: 0 0.5em; opacity: 0.6; }
+@media print {
+    body { background: none; }
+    .page-banner, .doc-nav { display: none; }
+    .container { box-shadow: none; padding: 0; max-width: none; }
+    .prose { max-width: none; }
+    /* On paper, spell out the short address of each cited source. */
+    a.src::after {
+        content: " (docs.andoverctdems.com" attr(href) ")";
+        color: var(--ink-mute);
+        font-size: 0.92em;
+    }
+    a { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="https://andoverctdems.com/">Andover Democrats</a><span class="sep">›</span><a href="/purpose-of-power/">The Purpose of the Power</a><span class="sep">›</span><span class="current">Notes</span>
+  </nav>
+</div>
+<div class="container">
+<p class="section-label">Notes</p>
+<h1 class="report-title">Notes on “The Purpose of the Power”</h1>
+<p class="doc-meta">Version 1.0<span class="sep">·</span>Download: <a href="/purpose-of-power/notes.docx">Word</a><span class="sep">·</span><a href="/purpose-of-power/notes.pdf">PDF</a></p>
+<hr class="report-header-rule">
+<div class="prose">
+<p>The essay and the resolution make an argument and leave their sources out. This page supplies them. The References section gives the basis for each factual claim, in the order the essay makes them, along with the caveats the essay compresses. The Further Reading section points to the wider debate, including the arguments the essay answers. All figures are as of November 11, 2026.</p>
+<h2 id="references">References</h2>
+<h3 id="the-election-and-the-limits-of-the-majority">The election and the limits of the majority</h3>
+<ul>
+  <li><strong>Democrats won both chambers.</strong> As of November 11, news organizations counted 54 Senate seats for Democrats, with Alaska and Mississippi still uncalled, and 259 House seats. Source: <a class="src" href="/links/302/">NBC News results</a>.</li>
+  <li><strong>The limits.</strong> Ending a Senate filibuster takes 60 votes. Overriding a veto takes two-thirds of each chamber (290 in the House, 67 in the Senate). Conviction on impeachment takes 67 senators. Even if both uncalled Senate races go to Democrats, the majority is 56.</li>
+  <li><strong>“Ninety percent of Election Day voters polled.”</strong> The figure is from the 2026 SSRS Voter Poll, conducted on Election Day, in which 90 percent of voters called corruption a crucial or major problem. Source: <a class="src" href="/links/303/">Christian Science Monitor, November 7</a>. Exit polls also found the economy to be voters’ top single issue, which is the strongest point made by those urging a narrower agenda.</li>
+  <li><strong>The post-Watergate laws.</strong> The Impoundment Control Act (1974), the Inspector General Act (1978), and the Ethics in Government Act (1978).</li>
+</ul>
+<h3 id="immigration-enforcement">Immigration enforcement</h3>
+<ul>
+  <li><strong>Sixty deaths in ICE detention; 37 in fiscal year 2026.</strong> Both figures are the Migration Policy Institute’s, which also describes the fiscal 2026 total as the most in the agency’s history. Source: <a class="src" href="/links/304/">Migration Policy Institute</a>. Counts vary slightly by source and cutoff date: ICE’s own list has been reported at 36 for the fiscal year (<a class="src" href="/links/305/">NationofChange, October 30</a>).</li>
+  <li><strong>The government’s explanation.</strong> ICE’s acting director has told Congress the number of deaths is high because the detained population is the largest in the agency’s history. Source: <a class="src" href="/links/306/">NPR, April 17</a>. A joint report by Human Rights Watch and Physicians for Human Rights found the death rate, and not only the count, had risen (see Further Reading).</li>
+  <li><strong>Renee Good and Alex Pretti.</strong> An ICE officer shot and killed Renee Good on January 7, 2026. Border Patrol agents shot and killed Alex Pretti on January 24. Both were U.S. citizens, and both were killed in Minneapolis. The Border Patrol is part of Customs and Border Protection (CBP). Source: <a class="src" href="/links/307/">NPR, April 10</a>.</li>
+  <li><strong>“Roughly $75 billion in new money.”</strong> The July 2025 budget reconciliation law provided about $75 billion for ICE, part of roughly $170 billion for immigration and border enforcement overall. Sources: <a class="src" href="/links/308/">CBS News</a> and the <a class="src" href="/links/309/">American Immigration Council</a>.</li>
+</ul>
+<h3 id="doge">DOGE</h3>
+<ul>
+  <li><strong>“Congress’s own auditors.”</strong> This is the Government Accountability Office (GAO), a nonpartisan agency of the legislative branch.</li>
+  <li><strong>The 96 percent finding.</strong> GAO reviewed the savings DOGE posted on its “Wall of Receipts” and found that, for grants, DOGE had not supplied enough information to verify how it calculated 96 percent of the savings it reported. The finding is that the savings cannot be verified, not that they are proven false. GAO also found contracts listed as terminated that had not been. Source: <a class="src" href="/links/310/">GAO-26-108615, August 6, 2026</a>.</li>
+  <li><strong>“About $110 billion” and “closed in July.”</strong> The Wall of Receipts showed about $110 billion in claimed savings from contracts, grants, and leases as of July 7, 2026. DOGE concluded operations on July 4, 2026. Source: <a class="src" href="/links/311/">CBS News</a>.</li>
+  <li><strong>“Led by one of the wealthiest men in the world.”</strong> Elon Musk was the public face and de facto leader of DOGE from its creation in January 2025 until he left the government in May 2025. The office continued to post savings claims after his departure.</li>
+</ul>
+<h3 id="programs-dismantled">Programs dismantled</h3>
+<ul>
+  <li><strong>“More than 14 million additional deaths by 2030.”</strong> This is a projection from a peer-reviewed study in The Lancet, published June 30, 2025. Its central estimate is just over 14 million additional deaths by 2030 if the cuts to USAID persist, with an uncertainty range of roughly 8.5 million to 19.7 million. Source: <a class="src" href="/links/312/">The Lancet</a>.</li>
+  <li><strong>“Nearly a third of them children under five.”</strong> The study projects about 4.5 million of those deaths among children under five, which is 32 percent of the central estimate.</li>
+  <li><strong>Caveat.</strong> These are modeled projections, not counts of deaths that have occurred. They depend on assumptions about whether other donors and governments replace the lost funding.</li>
+  <li><strong>The Department of Education.</strong> The department still exists. Its programs are being moved to other agencies through interagency agreements, although Congress funded the department for fiscal 2026. Sources: <a class="src" href="/links/313/">Federal News Network, February 2026</a> and <a class="src" href="/links/314/">NPR, September 24</a>.</li>
+</ul>
+<h3 id="corruption">Corruption</h3>
+<ul>
+  <li><strong>The $500 million purchase.</strong> The Wall Street Journal reported in early 2026 that an investment firm backed by Sheikh Tahnoon bin Zayed Al Nahyan, the national security adviser of the United Arab Emirates, bought 49 percent of World Liberty Financial, the Trump family’s cryptocurrency company, for $500 million, in a deal signed on January 16, 2025. Source: <a class="src" href="/links/315/">CNN, February 1, summarizing the Journal’s reporting</a>.</li>
+  <li><strong>Caveat.</strong> This is press reporting, not a finding by a court or an investigator, which is why the essay says “reportedly” and asks for sworn testimony. The company has said the President was not involved in the transaction.</li>
+</ul>
+<h3 id="the-epstein-files">The Epstein files</h3>
+<ul>
+  <li><strong>“As the law already requires.”</strong> The Epstein Files Transparency Act was signed on November 19, 2025, and gave the Justice Department 30 days to release its files. Source: <a class="src" href="/links/316/">overview of the Act</a>.</li>
+  <li><strong>Still incomplete.</strong> The department has released files in several batches, totaling about 3.5 million pages of more than 6 million it identified as potentially responsive. Source: <a class="src" href="/links/317/">CBS News</a>.</li>
+  <li><strong>The department’s handling.</strong> A Republican-led House committee reported in November 2026 that the federal government had failed to hold Epstein accountable. Source: <a class="src" href="/links/318/">NPR, November 10</a>.</li>
+  <li><strong>“Forced it to the floor by petition.”</strong> The House vote on the Act was compelled by a discharge petition led by one Republican and one Democratic member and signed by members of both parties.</li>
+</ul>
+<h3 id="the-wars">The wars</h3>
+<ul>
+  <li><strong>Iran: 18 killed, $38 billion.</strong> The Congressional Research Service reported 18 U.S. service members killed and 824 wounded as of September 15, 2026. The Congressional Budget Office estimated the cost of U.S. military operations at $38 billion as of August 1, 2026. An earlier Pentagon estimate was $33.4 billion as of June 29. Source: <a class="src" href="/links/319/">CRS report R48887, September 18, 2026</a>.</li>
+  <li><strong>“Without a vote of Congress.”</strong> Congress has neither declared war on Iran nor passed an authorization for the use of force against it.</li>
+  <li><strong>Boat strikes: “more than 200 people.”</strong> A count published June 2, 2026, put the death toll at 205. Later tallies are higher, so the essay’s figure is conservative. Congress has not authorized the strikes, and several war powers resolutions to stop them failed narrowly. Source: <a class="src" href="/links/320/">PolitiFact, June 2</a>.</li>
+  <li><strong>Venezuelan oil: “more than $13 billion.”</strong> The figure is the President’s own, given on July 27, 2026. He has said the money is used to run Venezuela. Source: <a class="src" href="/links/321/">CNBC, July 27</a>.</li>
+  <li><strong>“No full public accounting.”</strong> Members of Congress have asked the Treasury and State departments for an accounting of the money. A State Department official told Congress that about $3 billion had reached Venezuela. No complete public accounting has been released. Sources: <a class="src" href="/links/322/">Just Security</a> and <a class="src" href="/links/323/">Latin Times</a>.</li>
+  <li><strong>“Anyone positioned to profit.”</strong> The wording is deliberate. Senators have raised questions about defense-related investments by officials and by members of the President’s family, but no investigation has established that anyone profited improperly. Source: <a class="src" href="/links/324/">letter from Senators Warren, Blumenthal, Duckworth, Peters, and Merkley</a>.</li>
+</ul>
+<h3 id="the-institutions">The institutions</h3>
+<ul>
+  <li><strong>Pocket rescissions.</strong> GAO has found that the Administration’s pocket rescissions violated the Impoundment Control Act. Sources: <a class="src" href="/links/325/">House Appropriations Committee Democrats, quoting GAO</a> and <a class="src" href="/links/326/">Federal News Network</a>. The Administration disputes GAO’s reading of the law, and GAO’s findings do not bind the executive branch.</li>
+  <li><strong>Tariffs.</strong> In Learning Resources v. Trump, decided February 20, 2026, the Supreme Court held that the International Emergency Economic Powers Act does not authorize tariffs.</li>
+  <li><strong>The National Guard.</strong> On December 23, 2025, the Supreme Court declined to let the Administration proceed with its National Guard deployment in Illinois. Source: <a class="src" href="/links/327/">Texas Tribune</a>.</li>
+  <li><strong>Law firms.</strong> Federal district judges ruled for each of the four law firms that sued over executive orders targeting them. Source: <a class="src" href="/links/328/">NBC News</a>.</li>
+  <li><strong>Universities.</strong> A federal district judge ruled for Harvard in its suit over the cutoff of its federal funding. Source: <a class="src" href="/links/329/">WBUR, October 5</a>.</li>
+  <li><strong>Caveat.</strong> The law firm and Harvard rulings were on appeal as of this writing.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<h3 id="the-debate-over-what-the-majority-should-do">The debate over what the majority should do</h3>
+<ul>
+  <li><a class="src" href="/links/330/">CNN, November 9</a>: how Democrats are weighing impeachment against an affordability agenda, with voices from the party’s center and its left.</li>
+  <li><a class="src" href="/links/331/">Time, November 4</a>: what Democrats may do with their new power, including the pressure for votes on impeachment and other structural demands.</li>
+  <li><a class="src" href="/links/332/">NPR, November 6</a>: how the party plans to deliver on affordability.</li>
+  <li><a class="src" href="/links/333/">NPR, November 4</a>: the investigations the new majority is planning.</li>
+  <li><a class="src" href="/links/334/">Susan Estrich, National Memo, November 10</a>: the case for caution, arguing that the mandate is about affordability and not impeachment.</li>
+  <li><a class="src" href="/links/335/">NBC News, Meet the Press transcript, November 8</a>: interviews in which newly elected and senior Democrats discuss investigations and the risk of overreach.</li>
+  <li><a class="src" href="/links/336/">Inside Political Law, November 5</a>: what the exit polls suggest about public support for congressional investigations.</li>
+</ul>
+<h3 id="the-record">The record</h3>
+<ul>
+  <li><a class="src" href="/links/337/">Human Rights Watch and Physicians for Human Rights (PDF)</a>: a report on deaths in ICE detention and the medical care that preceded them.</li>
+  <li><a class="src" href="/links/338/">KFF, March 25, 2026</a>: deaths and health care in ICE detention centers.</li>
+  <li><a class="src" href="/links/310/">GAO-26-108615</a>: the full audit of DOGE’s reported savings.</li>
+  <li><a class="src" href="/links/339/">NPR, on the Lancet study</a>: a plain-language account of the USAID mortality projections.</li>
+  <li><a class="src" href="/links/340/">NPR, November 10</a>: the President’s cryptocurrency income and the transparency concerns it raises.</li>
+  <li><a class="src" href="/links/319/">CRS report R48887</a>: the Congressional Research Service’s overview of the conflict with Iran and the issues it presents for Congress.</li>
+  <li><a class="src" href="/links/322/">Just Security</a>: questions for Congress about U.S. control of Venezuela’s oil revenue and other assets.</li>
+</ul>
+</div>
+<p class="doc-nav"><a href="/purpose-of-power/">← The Purpose of the Power</a><span class="sep">·</span><a href="/purpose-of-power/essay/">The essay</a><span class="sep">·</span><a href="/purpose-of-power/resolution/">The resolution</a></p>
+</div>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Andover Democratic Town Committee</strong> · <a href="https://andoverctdems.com/">andoverctdems.com</a></div>
+</footer>
+</body>
+</html>
