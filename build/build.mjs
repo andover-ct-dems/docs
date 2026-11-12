@@ -30,6 +30,10 @@ const homePage = (ctx) => {
     `<h1 class="report-title">${escapeHtml(ctx.docsLabel)}</h1>\n` +
     `<hr class="report-header-rule">\n` +
     `<div class="link-card">
+  <div class="link-card-title"><a href="/purpose-of-power/">The Purpose of the Power</a></div>
+  <p class="link-card-desc">A position paper, resolution, and source notes from the Andover Democratic Town Committee on how the new congressional majority should use its power.</p>
+</div>
+<div class="link-card">
   <div class="link-card-title"><a href="/links/">Links</a></div>
   <p class="link-card-desc">${escapeHtml(ctx.linksDescription)}</p>
 </div>`
