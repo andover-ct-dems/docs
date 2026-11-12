@@ -237,7 +237,7 @@ const docPage = (doc, body, ctx) =>
         { title: doc.title, description: doc.description, path: `/links/${doc.id}/`, image: doc.image },
         ctx
       ),
-      trail: [{ label: "Links", href: "/links/" }, { label: doc.title }],
+      trail: [{ label: ctx.docsLabel, href: "/" }, { label: "Links", href: "/links/" }, { label: doc.title }],
       body,
     },
     ctx
@@ -289,7 +289,7 @@ const renderIndexPage = (docs, ctx) => {
     {
       pageTitle: title,
       og: ogHead({ title, description: ctx.linksDescription, path: "/links/" }, ctx),
-      trail: [{ label: "Links" }],
+      trail: [{ label: ctx.docsLabel, href: "/" }, { label: "Links" }],
       body,
     },
     ctx
