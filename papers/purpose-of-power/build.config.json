@@ -1,0 +1,64 @@
+{
+  "current": "1.1",
+  "paperTitle": "The Purpose of the Power",
+  "credit": "Andover (CT) Democratic Town Committee",
+  "origin": "https://docs.andoverctdems.com",
+  "basePath": "/purpose-of-power",
+  "linksPath": "/links",
+  "linksListId": 301,
+  "linksSrcDirs": [
+    "../../links/src"
+  ],
+  "versionsDir": "versions",
+  "outDir": "../../_site/purpose-of-power",
+  "siteName": "Andover Democrats",
+  "crumbs": [
+    {
+      "label": "Andover Democrats",
+      "href": "https://andoverctdems.com/"
+    },
+    {
+      "label": "Documents",
+      "href": "/"
+    }
+  ],
+  "footer": {
+    "org": "Andover Democratic Town Committee",
+    "label": "andoverctdems.com",
+    "href": "https://andoverctdems.com/"
+  },
+  "documents": [
+    {
+      "key": "essay",
+      "src": "src/essay.md",
+      "label": "Essay",
+      "runningHead": "Position Paper",
+      "pageTitle": "The Purpose of the Power: The Essay",
+      "cardTitle": "The essay",
+      "description": "A position paper from the Andover Democratic Town Committee on how the new congressional majority should use its power: with discipline, on the most consequential work.",
+      "centerTitle": false,
+      "bodyPt": 11,
+      "maxPages": 2
+    },
+    {
+      "key": "resolution",
+      "src": "src/resolution.md",
+      "label": "Resolution",
+      "runningHead": "Resolution",
+      "cardTitle": "The resolution",
+      "description": "A resolution of the Andover Democratic Town Committee calling on the Democratic majorities in Congress to use their power with discipline, in a form other committees can amend and adopt.",
+      "centerTitle": true,
+      "bodyPt": 11
+    },
+    {
+      "key": "notes",
+      "src": "src/notes.md",
+      "label": "Notes",
+      "runningHead": "Notes and References",
+      "cardTitle": "The notes",
+      "description": "References and further reading for \"The Purpose of the Power\": the source behind each factual claim in the essay and resolution, with caveats.",
+      "centerTitle": false,
+      "bodyPt": 10.5
+    }
+  ]
+}
