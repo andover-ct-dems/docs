@@ -1,8 +1,9 @@
 # docs.andoverctdems.com
 
 Static documents and a link registry for the Andover Democratic Town Committee,
-published to GitHub Pages. No framework, no bundler: one small Node build turns
-YAML into HTML and copies everything else through untouched.
+published to GitHub Pages. No framework, no bundler: a small Node build turns
+YAML into link pages, copies `static/` through untouched, and builds each paper
+in `papers/` from Markdown into web pages, Word files and PDFs.
 
 
 ## Layout
@@ -11,6 +12,7 @@ YAML into HTML and copies everything else through untouched.
 | ----------------------------- | ----------------------------------------------------------------- |
 | `links/src/*.yaml`            | Link registry sources, one file per link or collection            |
 | `static/`                     | Files published verbatim (PDFs, images, hand-made pages)          |
+| `papers/purpose-of-power/`    | A paper: one folder of Markdown per version, and its builders     |
 | `site.config.json`            | Site origin, names, breadcrumb home link, footer text             |
 | `build/build.mjs`             | The build: home page, links, then `static/` copied over the top   |
 | `build/links.mjs`             | Link registry generator                                           |
@@ -25,17 +27,45 @@ YAML into HTML and copies everything else through untouched.
 
 ```
 npm install
-npm run build      # writes _site/
+npm run build      # writes _site/; the PDF step needs LibreOffice
 npm run serve      # previews _site/ at http://localhost:8080
 ```
 
-Then commit and push; the workflow rebuilds and publishes.
+Then commit and push; the workflow rebuilds and publishes. Without LibreOffice,
+run `node build/build.mjs` and then `node papers/purpose-of-power/build.js --no-pdf`
+to preview everything except the PDFs.
+
+
+## Papers
+
+`papers/purpose-of-power/versions/` holds one folder per version, each with
+`essay.md`, `resolution.md`, `notes.md` and `landing.json` (the landing page's
+copy, the version's date, and a one-line summary for the versions page).
+`current` in `papers/purpose-of-power/build.config.json` names the version
+shown at `/purpose-of-power/`.
+
+| Address                           | Shows                                         |
+| --------------------------------- | --------------------------------------------- |
+| `/purpose-of-power/`              | The current version                           |
+| `/purpose-of-power/v1.0/` etc.    | That version, permanently                     |
+| `/purpose-of-power/versions/`     | The published versions; linked from the main page only |
+
+To start a new version, copy the latest folder to `versions/1.2/` and edit it.
+While `current` is still `1.1`, version 1.2 is a draft: it is built at
+`/purpose-of-power/v1.2/` and marked as a draft there, but no page links to it
+and it asks search engines not to index it. To publish it, set `current` to
+`1.2`.
+
+The build stops, writing nothing, if a source cited in any version's notes has
+no leaf in `links/src/`. It also fails if the essay's PDF runs past two pages
+(`maxPages` in the config) or if a PDF was made without the expected fonts.
+`papers/purpose-of-power/HANDOFF.md` has the editorial rules and open questions.
 
 
 ## Documents
 
-A file at `static/purpose-of-power/resolution.pdf` is published at
-`https://docs.andoverctdems.com/purpose-of-power/resolution.pdf`. Anything in
+A file at `static/minutes/2026-11.pdf` is published at
+`https://docs.andoverctdems.com/minutes/2026-11.pdf`. Anything in
 `static/` wins over a generated file of the same path, so `static/index.html`
 replaces the generated home page.
 

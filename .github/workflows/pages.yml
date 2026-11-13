@@ -1,10 +1,13 @@
-# Build the site from links/src/*.yaml + static/ and publish it to GitHub Pages.
+# Build the site from links/src/*.yaml, static/ and papers/, and publish it to
+# GitHub Pages. A pull request runs the build only, without deploying; its
+# output can be downloaded from the run's "github-pages" artifact for review.
 # Requires Settings → Pages → Source: "GitHub Actions" on the repository.
 name: Build and deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -26,6 +29,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      # LibreOffice turns the papers' Word files into PDFs. Caladea and Carlito
+      # stand in for Cambria and Calibri; the build fails if they are missing.
+      - name: Install LibreOffice and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-writer fonts-crosextra-caladea fonts-crosextra-carlito
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
@@ -33,6 +42,7 @@ jobs:
           path: _site
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
