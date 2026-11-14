@@ -4,5 +4,22 @@
   "home": { "label": "Andover Democrats", "href": "https://andoverctdems.com/" },
   "docsLabel": "Documents",
   "linksDescription": "Sources cited in Andover Democratic Town Committee papers and posts.",
+  "homeCards": [
+    {
+      "href": "/purpose-of-power/",
+      "title": "The Purpose of the Power",
+      "description": "A position paper, resolution, and source notes from the Andover Democratic Town Committee on how the new congressional majority should use its power."
+    },
+    {
+      "href": "/flip-55/",
+      "title": "The 55th is Blue",
+      "description": "Ellen Paul has flipped the 55th — an animated celebration"
+    },
+    {
+      "href": "/links/",
+      "title": "Links",
+      "description": "Sources cited in Andover Democratic Town Committee papers and posts."
+    }
+  ],
   "footer": "<strong>Andover Democratic Town Committee</strong> · <a href=\"https://andoverctdems.com/\">andoverctdems.com</a>"
 }

@@ -13,7 +13,7 @@ in `papers/` from Markdown into web pages, Word files and PDFs.
 | `links/src/*.yaml`            | Link registry sources, one file per link or collection            |
 | `static/`                     | Files published verbatim (PDFs, images, hand-made pages)          |
 | `papers/purpose-of-power/`    | A paper: one folder of Markdown per version, and its builders     |
-| `site.config.json`            | Site origin, names, breadcrumb home link, footer text             |
+| `site.config.json`            | Site origin, names, home page cards, breadcrumb home link, footer |
 | `build/build.mjs`             | The build: home page, links, then `static/` copied over the top   |
 | `build/links.mjs`             | Link registry generator                                           |
 | `build/chrome.mjs`            | Shared banner, breadcrumbs, footer and page shell                 |
@@ -60,6 +60,13 @@ The build stops, writing nothing, if a source cited in any version's notes has
 no leaf in `links/src/`. It also fails if the essay's PDF runs past two pages
 (`maxPages` in the config) or if a PDF was made without the expected fonts.
 `papers/purpose-of-power/HANDOFF.md` has the editorial rules and open questions.
+
+
+## Home page
+
+The home page shows one card per entry in `homeCards` in `site.config.json`, in
+that order. Each entry has an `href`, a `title` and a `description`. A new page
+appears there only when you add an entry for it.
 
 
 ## Documents

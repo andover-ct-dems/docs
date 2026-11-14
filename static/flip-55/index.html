@@ -19,16 +19,19 @@
 <meta property="og:video:height" content="1080">
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=block" rel="stylesheet">
 <style>
-  html, body { margin: 0; height: 100%; background: #14122b; }
-  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-  svg { width: min(100vw, calc(100vh - 132px)); height: auto; aspect-ratio: 1; display: block; }
+  html, body { margin: 0; background: #14122b; }
+  body { min-height: 100vh; box-sizing: border-box; padding-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  svg { width: min(100vw, calc(100vh - 150px)); height: auto; aspect-ratio: 1; display: block; }
   #links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   #links a, #links button { font: 600 14px system-ui, sans-serif; padding: 6px 16px; border-radius: 999px; border: 0;
                background: #2B6BE0; color: #fff; text-decoration: none; cursor: pointer; }
   #links a:hover, #links button:hover { background: #3B7BF0; }
   footer { color: #9d98c0; font: 13px system-ui, sans-serif; text-align: center; padding: 0 16px; }
   footer a { color: #cfcbe8; }
-  body.export #links, body.export footer { display: none; }
+  #shareNote { color: #cfcbe8; font: 14px/1.45 system-ui, sans-serif; text-align: center; max-width: 560px; margin: 0; padding: 0 16px; }
+  #shareNote a { color: #FFC93C; }
+  #caption { display: block; margin-top: 6px; padding: 6px 10px; border-radius: 8px; background: #25224a; user-select: all; }
+  body.export #links, body.export footer, body.export #shareNote { display: none; }
   text { font-family: 'Luckiest Guy', 'Comic Sans MS', 'Arial Black', sans-serif; }
   #ui { display: flex; gap: 12px; align-items: center; color: #cfcbe8; font: 14px system-ui, sans-serif; }
   #ui button { font: 600 14px system-ui, sans-serif; padding: 6px 16px; border-radius: 999px; border: 0;
@@ -47,10 +50,13 @@
 </div>
 <div id="links">
   <a href="flip-55.mp4" download="flip-55.mp4">Download video</a>
-  <a id="fbShare" target="_blank" rel="noopener"
-     href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.andoverctdems.com%2Fflip-55%2F">Share on Facebook</a>
-  <button id="fileShare" hidden>Share the video&hellip;</button>
+  <button id="fbPost">Post to Facebook</button>
 </div>
+<p id="shareNote" hidden>
+  The video is downloading and the caption below is copied. On <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>,
+  start a post, choose Photo/video, pick <b>flip-55.mp4</b>, and paste the caption.
+  <span id="caption"></span>
+</p>
 <footer>&copy; 2026 <a href="https://andoverctdems.com/">Andover, Connecticut DTC</a></footer>
 <script>
 // ---------- constants ----------
@@ -420,19 +426,33 @@ $('replay').onclick = play;
 scrub.oninput = () => { playing = false; render((scrub.value / 1000) * DURATION); };
 // Phones (and some desktops) can hand the MP4 itself to the system share sheet, where Facebook is one choice.
 const PAGE_URL = 'https://docs.andoverctdems.com/flip-55/';
-const fileShare = $('fileShare');
-try {
-  const probe = new File([''], 'flip-55.mp4', { type: 'video/mp4' });
-  if (navigator.canShare && navigator.canShare({ files: [probe] })) fileShare.hidden = false;
-} catch (e) { /* no file sharing here; the link-share button still works */ }
-fileShare.onclick = async () => {
-  try {
-    const blob = await (await fetch('flip-55.mp4')).blob();
-    const file = new File([blob], 'flip-55.mp4', { type: 'video/mp4' });
-    await navigator.share({ files: [file], title: 'Flipping the 55th', text: 'Congratulations, Ellen Paul! ' + PAGE_URL });
-  } catch (e) {
-    if (e.name !== 'AbortError') window.open($('fbShare').href, '_blank', 'noopener');
+const CAPTION = 'Congratulations, Ellen Paul! The 55th is blue. ' + PAGE_URL;
+$('caption').textContent = CAPTION;
+// A web page cannot put a video into Facebook's composer. On a phone we hand the file to the system
+// share sheet (Facebook is one of the choices); elsewhere we download it and walk the user through.
+const isPhone = (navigator.userAgentData && navigator.userAgentData.mobile) || /Android|iPhone|iPad|iPod/.test(navigator.userAgent);
+function manualPost() {
+  const a = document.createElement('a');
+  a.href = 'flip-55.mp4'; a.download = 'flip-55.mp4';
+  document.body.appendChild(a); a.click(); a.remove();
+  if (navigator.clipboard) navigator.clipboard.writeText(CAPTION).catch(() => {});
+  $('shareNote').hidden = false;
+}
+$('fbPost').onclick = async () => {
+  if (isPhone && navigator.canShare) {
+    try {
+      const blob = await (await fetch('flip-55.mp4')).blob();
+      const file = new File([blob], 'flip-55.mp4', { type: 'video/mp4' });
+      if (navigator.canShare({ files: [file] })) {
+        if (navigator.clipboard) navigator.clipboard.writeText(CAPTION).catch(() => {});
+        await navigator.share({ files: [file], title: 'Flipping the 55th', text: CAPTION });
+        return;
+      }
+    } catch (e) {
+      if (e.name === 'AbortError') return;
+    }
   }
+  manualPost();
 };
 
 render(0);

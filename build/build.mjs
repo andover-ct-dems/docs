@@ -4,7 +4,8 @@
  * Pages workflow uploads and which is never committed:
  *
  *   1. wipe _site/
- *   2. write a small home page at _site/index.html
+ *   2. write a small home page at _site/index.html, one card per entry in
+ *      site.config.json's homeCards
  *   3. render links/src/*.yaml into _site/links/ (build/links.mjs)
  *   4. copy static/ over the top, verbatim
  *
@@ -29,14 +30,12 @@ const homePage = (ctx) => {
   const body =
     `<h1 class="report-title">${escapeHtml(ctx.docsLabel)}</h1>\n` +
     `<hr class="report-header-rule">\n` +
-    `<div class="link-card">
-  <div class="link-card-title"><a href="/purpose-of-power/">The Purpose of the Power</a></div>
-  <p class="link-card-desc">A position paper, resolution, and source notes from the Andover Democratic Town Committee on how the new congressional majority should use its power.</p>
-</div>
-<div class="link-card">
-  <div class="link-card-title"><a href="/links/">Links</a></div>
-  <p class="link-card-desc">${escapeHtml(ctx.linksDescription)}</p>
-</div>`
+    ctx.homeCards
+      .map((c) => `<div class="link-card">
+  <div class="link-card-title"><a href="${escapeHtml(c.href)}">${escapeHtml(c.title)}</a></div>
+  <p class="link-card-desc">${escapeHtml(c.description)}</p>
+</div>`)
+      .join("\n")
   return pageShell(
     {
       pageTitle: title,
@@ -50,9 +49,12 @@ const homePage = (ctx) => {
 
 const main = () => {
   const config = JSON.parse(readFileSync(join(ROOT, "site.config.json"), "utf8"))
-  const missing = ["siteOrigin", "siteName", "home", "docsLabel", "linksDescription", "footer"]
+  const missing = ["siteOrigin", "siteName", "home", "docsLabel", "linksDescription", "homeCards", "footer"]
     .filter((k) => !config[k])
   if (missing.length) throw new Error(`site.config.json is missing: ${missing.join(", ")}`)
+  if (config.homeCards.some((c) => !c.href || !c.title || !c.description)) {
+    throw new Error("site.config.json: every homeCards entry needs href, title and description")
+  }
 
   // Inlined into every page, so the authoring comments are stripped on the way.
   const css = ["theme.css", "base.css"]
