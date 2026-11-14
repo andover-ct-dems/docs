@@ -1,0 +1,22 @@
+html, body { margin: 0; background: #14122b; }
+body { min-height: 100vh; box-sizing: border-box; padding-bottom: 10px; display: flex; flex-direction: column;
+       align-items: center; justify-content: center; gap: 10px; }
+svg#stage { width: min(100vw, calc(100vh - 120px)); height: auto; aspect-ratio: 1; display: block; }
+text { font-family: 'Luckiest Guy', 'Comic Sans MS', 'Arial Black', sans-serif; }
+#ui { display: flex; gap: 12px; align-items: center; color: #cfcbe8; font: 14px system-ui, sans-serif; }
+#ui button { font: 600 14px system-ui, sans-serif; padding: 6px 16px; border-radius: 999px; border: 0;
+             background: #FFC93C; color: #2A2438; cursor: pointer; }
+#ui input { width: min(50vw, 420px); }
+#links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+#links a, #links button { font: 600 14px system-ui, sans-serif; padding: 6px 16px; border-radius: 999px; border: 0;
+             background: #2B6BE0; color: #fff; text-decoration: none; cursor: pointer; }
+#links a:hover, #links button:hover { background: #3B7BF0; }
+#links a.alt { background: #35315c; }
+#links a.alt:hover { background: #45407a; }
+#shareNote { color: #cfcbe8; font: 14px/1.45 system-ui, sans-serif; text-align: center; max-width: 560px; margin: 0; padding: 0 16px; }
+#shareNote a { color: #FFC93C; }
+#caption { display: block; margin-top: 6px; padding: 6px 10px; border-radius: 8px; background: #25224a; user-select: all; }
+.msg { color: #cfcbe8; font: 16px system-ui, sans-serif; padding: 24px; text-align: center; }
+body.export { display: block; padding: 0; }
+body.export svg#stage { width: 1080px; height: 1080px; }
+body.export #ui, body.export #links, body.export #shareNote { display: none; }

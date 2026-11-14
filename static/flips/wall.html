@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seats flipped</title>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=block" rel="stylesheet">
+<link href="common.css" rel="stylesheet">
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+// Every seat in a chamber, with the flipped ones leaping out one at a time: wall.html?c=house
+const q = new URLSearchParams(location.search);
+const KEY = q.get('c') || 'house', CHM = CHAMBERS[KEY];
+if (!CHM) {
+  document.body.innerHTML = `<p class="msg">No data yet for chamber "${esc(KEY)}". Add it to data.js.</p>`;
+  throw new Error('no chamber data');
+}
+document.title = `Connecticut ${CHM.name}: seats flipped`;
+const FL = flipList(CHM), NF = FL.length, CNT = seatCounts(CHM);
+const flipIdx = {}; FL.forEach((n, i) => flipIdx[n] = i);
+const before = n => seatBefore(CHM, n), after = n => seatAfter(CHM, n);
+
+// ---------- grid layout: pick the column count that gives the biggest cards ----------
+const GX = 40, GY = 178, GW = 1000, GH = 700, ASPECT = 1.15;
+let best = { w: 0 };
+for (let c = 1; c <= CHM.total; c++) {
+  const r = Math.ceil(CHM.total / c), cw = GW / c, ch = GH / r, w = Math.min(cw, ch * ASPECT) * 0.88;
+  if (w > best.w + 0.01) best = { w, c, cw, ch };
+}
+const COLS = best.c, KW = best.w, KH = KW / ASPECT;
+const cx = n => GX + ((n - 1) % COLS + 0.5) * best.cw;
+const cyBottom = n => GY + (Math.floor((n - 1) / COLS) + 0.5) * best.ch + KH / 2;
+const BIG = Math.max(1.5, 200 / KW);                        // how much a flipping card grows
+const bigX = n => clamp(cx(n), 40 + KW * BIG / 2 + 10, 1040 - KW * BIG / 2 - 10);
+const bigY = n => clamp(cyBottom(n) + KH * (BIG - 1) / 2, GY + KH * BIG + 20, GY + GH - 4);
+
+// ---------- timeline ----------
+const S0 = 2.4, STEP = 1.15;
+const S = i => S0 + i * STEP;                               // start of the i-th flip
+const HOP = S(NF - 1) + 1.55;                               // all the flipped cards hop together
+const Z = {};
+Z.zoom = HOP + 1.5;
+Z.crouch = Z.zoom + 0.55;
+Z.leap = Z.crouch + 0.35;
+Z.land = Z.leap + 0.9;
+const DURATION = Z.land + 6;
+
+const P = {
+  pops: [
+    ...FL.map((n, i) => [S(i) + 0.85, bigX(n), bigY(n) - KH * BIG / 2, 170, GOLD]),
+    [HOP + 0.1, 200, 300, 200, GOLD], [HOP + 0.35, 880, 380, 200, '#fff'], [HOP + 0.6, 540, 620, 220, GOLD],
+    [HOP + 0.85, 240, 760, 180, '#fff'], [HOP + 1.1, 860, 760, 180, GOLD],
+    ...finalePops(Z.land),
+  ],
+  bursts: [...makeBurst(11, 110, HOP + 0.1, 540, 700, 500, 1500), ...makeBurst(23, 170, Z.land, 540, 620, 600, 1900)],
+  balloons: makeBalloons(43, 10, Z.land + 0.1, 4.0, true),
+  rain: makeRain(5, 60), rainStart: Z.land + 0.6,
+};
+
+// ---------- static scene ----------
+let nameSize = {};
+function frontHTML() {
+  let s = `<rect width="1080" height="1080" fill="${CREAM}"/>
+    <rect x="0" y="0" width="1080" height="150" fill="${GOLD}"/><rect x="0" y="146" width="1080" height="8" fill="${INK}"/>
+    <rect x="0" y="892" width="1080" height="188" fill="#F5E4B8"/><rect x="0" y="888" width="1080" height="8" fill="${INK}"/>
+    <text x="40" y="78" font-size="60" fill="${INK}">CONNECTICUT ${esc(CHM.name.toUpperCase())}</text>
+    <text x="42" y="126" font-size="34" fill="${INK}" opacity=".7">2026 ELECTION</text>
+    <g id="score"></g><g id="cards"></g><g id="callout"></g>`;
+  return s;
+}
+function backHTML() {
+  const title = `${NF} SEAT${NF === 1 ? '' : 'S'} FLIPPED!`;
+  const sub = `CONNECTICUT ${CHM.name.toUpperCase()}: ${CNT.dAfter} TO ${CNT.rAfter}`;
+  const t = (str, x, y, size, fill, sw, anchor = 'middle') =>
+    `<text x="${x}" y="${f1(y)}" text-anchor="${anchor}" font-size="${f1(size)}" fill="${fill}" stroke="${INK}" stroke-width="${sw}" stroke-linejoin="round" paint-order="stroke">${str}</text>`;
+  const two = NF > 7, rows = two ? Math.ceil(NF / 2) : NF;
+  const roomy = two && rows <= 5;                        // a short list gets larger type
+  const step = Math.min(two ? (roomy ? 112 : 86) : 100, 640 / rows), base = Math.min(two ? (roomy ? 52 : 40) : 56, step * 0.6);
+  const top = 350 + (640 - step * rows) / 2 + step * 0.7;
+  let names = '';
+  FL.forEach((n, i) => {
+    const colI = two ? Math.floor(i / rows) : 0, row = two ? i % rows : i;
+    const nm = CHM.flips[n].name.toUpperCase(), label = `${n}  ${nm}`;
+    const size = fitSize(label, base, two ? 415 : 880);
+    const body = `<tspan fill="${GOLD}">${n}</tspan><tspan dx="${f1(size * 0.4)}">${esc(nm)}</tspan>`;
+    names += two ? t(body, colI ? 565 : 80, top + row * step, size, '#fff', 9, 'start')
+                 : t(body, 540, top + row * step, size, '#fff', 10);
+  });
+  return `
+    <rect width="1080" height="1080" fill="${BLUE}"/>
+    <g id="rays" transform="translate(540,560)">${rays(14, 900, '#3B7BF0')}</g>
+    <rect x="34" y="34" width="1012" height="1012" rx="40" fill="none" stroke="#fff" stroke-width="10" opacity=".55"/>
+    <g id="words">${t(esc(title), 540, 210, fitSize(title, 124, 930), GOLD, 20)}</g>
+    ${t(esc(sub), 540, 300, fitSize(sub, 54, 900), '#fff', 12)}
+    ${names}`;
+}
+
+// ---------- per-frame drawing ----------
+function cardSVG(n, t) {
+  const i = flipIdx[n];
+  let color = col(before(n)), x = cx(n), yb = cyBottom(n), k = 1, sx = 1, sy = 1, lift = 0, done = false;
+  const pop = easeOutBack(prog(t, ((n - 1) / CHM.total) * 0.9, 0.3));
+  if (pop <= 0) return null;
+  if (i !== undefined) {
+    const s = S(i);
+    const g = clamp(easeOutBack(prog(t, s, 0.25)) - easeInOut(prog(t, s + 0.95, 0.25)), 0, 1.3);
+    k = 1 + (BIG - 1) * g;
+    x = lerp(cx(n), bigX(n), clamp(g)); yb = lerp(cyBottom(n), bigY(n), clamp(g));
+    const j = jump(t, s + 0.25, s + 0.42, s + 0.85, KH * 0.9, 0.3);
+    sx = j.sx; sy = j.sy; lift = j.lift * k;
+    if (j.back) { color = col(after(n)); done = true; }
+    for (const h0 of [HOP + i * 0.05, HOP + 0.62 + i * 0.05]) {       // two victory hops
+      const h = prog(t, h0, 0.5);
+      if (h > 0 && h < 1) { lift += KH * 0.75 * Math.sin(Math.PI * h); k *= 1 + 0.3 * Math.sin(Math.PI * h); }
+    }
+  }
+  const sw = Math.max(2.5, KW * 0.06), fs = KH * (n >= 100 ? 0.44 : 0.54);
+  const svg = `<g transform="translate(${f1(x)},${f1(yb - lift)}) scale(${(k * sx * pop).toFixed(3)},${(k * sy * pop).toFixed(3)})">
+    ${k > 1.05 ? `<rect x="${f1(-KW / 2 + 3)}" y="${f1(-KH + 4)}" width="${f1(KW)}" height="${f1(KH)}" rx="${f1(KW * 0.14)}" fill="#000" opacity=".2"/>` : ''}
+    <rect x="${f1(-KW / 2)}" y="${f1(-KH)}" width="${f1(KW)}" height="${f1(KH)}" rx="${f1(KW * 0.14)}" fill="${color}" stroke="${done ? GOLD : INK}" stroke-width="${f1(done ? sw * 1.5 : sw)}"/>
+    ${done ? `<rect x="${f1(-KW / 2 - sw)}" y="${f1(-KH - sw)}" width="${f1(KW + 2 * sw)}" height="${f1(KH + 2 * sw)}" rx="${f1(KW * 0.14 + sw)}" fill="none" stroke="${INK}" stroke-width="${f1(sw * 0.8)}"/>` : ''}
+    <text x="0" y="${f1(-KH / 2 + fs * 0.37)}" text-anchor="middle" font-size="${f1(fs)}" fill="#fff" stroke="${INK}" stroke-width="${f1(KW * 0.075)}" stroke-linejoin="round" paint-order="stroke">${n}</text>
+  </g>`;
+  return { svg, z: k + lift };
+}
+
+function render(t) {
+  t = clamp(t, 0, DURATION);
+  const cards = [];
+  for (let n = 1; n <= CHM.total; n++) { const c = cardSVG(n, t); if (c) cards.push(c); }
+  cards.sort((a, b) => a.z - b.z);
+  $('cards').innerHTML = cards.map(c => c.svg).join('');
+
+  // scoreboard: ticks over at the moment each card turns
+  let d = CNT.dBefore, r = CNT.rBefore, last = -9, cur = -1;
+  FL.forEach((n, i) => {
+    if (t >= S(i)) cur = i;
+    if (t >= S(i) + 0.64) { if (CHM.flips[n].to === 'D') { d++; r--; } else { d--; r++; } last = S(i) + 0.64; }
+  });
+  const bump = 1 + 0.3 * (1 - easeOut(prog(t, last, 0.35)));
+  const chip = (x, fill, label, val) => `<g transform="translate(${x},78) scale(${bump.toFixed(3)})">
+      <rect x="-95" y="-50" width="190" height="100" rx="22" fill="${fill}" stroke="${INK}" stroke-width="7"/>
+      <text x="-78" y="20" font-size="34" fill="#fff" opacity=".85">${label}</text>
+      <text x="80" y="25" text-anchor="end" font-size="64" fill="#fff" stroke="${INK}" stroke-width="8" stroke-linejoin="round" paint-order="stroke">${val}</text></g>`;
+  $('score').innerHTML = chip(750, BLUE, 'D', d) + chip(958, RED, 'R', r);
+
+  // callout: who just flipped
+  let l1, l2, size = 84, t0 = 0.5, fill = BLUE;
+  if (t >= HOP) { l1 = `CONNECTICUT ${CHM.name.toUpperCase()}`; l2 = `${NF} SEAT${NF === 1 ? '' : 'S'} FLIPPED!`; t0 = HOP; }
+  else if (cur >= 0) { const n = FL[cur]; l1 = `DISTRICT ${n}`; l2 = CHM.flips[n].name.toUpperCase(); size = nameSize[n] || 84; t0 = S(cur); fill = col(CHM.flips[n].to); }
+  else { l1 = `${CHM.total} SEATS`; l2 = 'WHO FLIPPED?'; fill = INK; }
+  const cs = easeOutBack(prog(t, t0, 0.22));
+  $('callout').innerHTML = cs <= 0 ? '' : `<g transform="translate(540,985) scale(${cs.toFixed(3)})">
+      <text x="0" y="-42" text-anchor="middle" font-size="40" fill="${INK}">${esc(l1)}</text>
+      <text x="0" y="46" text-anchor="middle" font-size="${f1(size)}" fill="${fill === INK ? '#fff' : fill}" stroke="${INK}" stroke-width="12" stroke-linejoin="round" paint-order="stroke">${esc(l2)}</text></g>`;
+
+  sceneFlip(t, Z);
+  $('partyLayer').innerHTML = t < S(0) ? '' : partySVG(t, P);
+}
+
+setupPage({
+  video: `out/${KEY}-wall.mp4`,
+  caption: `${NF} seat${NF === 1 ? '' : 's'} flipped in the Connecticut ${CHM.name}!`,
+  init() {
+    for (const n of FL) nameSize[n] = fitSize(CHM.flips[n].name.toUpperCase(), 84, 980);
+    buildStage(frontHTML(), backHTML());
+    return { render, duration: DURATION };
+  },
+});
+</script>
+</body>
+</html>
